@@ -52,19 +52,18 @@ static WebEngine *sDefaultWebEngine = nil;
 {
     NSString *the_connectionID = nil;
 
-    //NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@",KBASEURL, relativePath];
-    NSString *urlString = @"http://cagt.bu.edu/w/images/c/c9/Mygarden.txt";
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@",KBASEURL, relativePath];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:200];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody:(NSMutableData*)requestBody];
-
+    [urlString release];
+    
     if (theRequest) 
     {
         the_connectionID = [NSString stringByGeneratingUUID];
         
         SBNSURLConnection *testConn = [[SBNSURLConnection alloc] initWithRequest:theRequest delegate:self startImmediately:YES andConnectionIdentifier:the_connectionID];
         [[ConnectionManager sharedConnectionManager] addConnectionRequest:testConn withConnectionIdentifier:the_connectionID ];
-        //NSURLConnection *testConn = [NSURLConnection connectionWithRequest:theRequest delegate:self];
         
         @synchronized (self)
 		{
@@ -160,7 +159,7 @@ static WebEngine *sDefaultWebEngine = nil;
 
 -(NSString*)sendLoginRequestwithInfo:(NSDictionary*)inDict withObserver:(id)inOberver
 {
-	NSString *the_relativeURL = @"user/login/";
+	NSString *the_relativeURL = @"Mygarden.txt";
 	SBJSON *jsonParser = [SBJSON new];
 	NSString *the_loginINput = [jsonParser stringWithObject:inDict];
 	NSData *the_data = [the_loginINput dataUsingEncoding:NSUTF8StringEncoding];

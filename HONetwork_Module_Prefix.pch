@@ -13,9 +13,4 @@
     #import <UIKit/UIKit.h>
 #endif
 
-#define KBASEURL @"http://ec2-174-129-47-50.compute-1.amazonaws.com/ho-live/api/v1/"
-
-#define ENABLE_OAUTH		1
-
-#define USE_NSURL_WRAPPER   1
-
+#define KBASEURL @"http://cagt.bu.edu/w/images/c/c9/"

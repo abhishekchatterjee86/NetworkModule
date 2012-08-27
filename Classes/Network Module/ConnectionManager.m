@@ -62,8 +62,6 @@ static ConnectionManager *sSharedConnectionManager = nil;
 	[super dealloc];
 }
 
-
-
 -(void)addConnectionRequest:(SBNSURLConnection *)inRequest withConnectionIdentifier:(NSString*)inIdentifier
 {
     @synchronized(self)
@@ -76,13 +74,8 @@ static ConnectionManager *sSharedConnectionManager = nil;
 {
 	@synchronized(self)
 	{
-#if !USE_NSURL_WRAPPER
-        [[mConnections allValues] makeObjectsPerformSelector:@selector(clearDelegatesAndCancel)];
-		[mConnections removeAllObjects];
-#else
         [[mConnections allValues] makeObjectsPerformSelector:@selector(cancellAndClearDelegate)];
 		[mConnections removeAllObjects];
-#endif
 	}
 }
 
@@ -92,15 +85,9 @@ static ConnectionManager *sSharedConnectionManager = nil;
 	{
 		if(nil != inIdentifier)
 		{
-#if !USE_NSURL_WRAPPER
-            ASIHTTPRequest *request = [mConnections objectForKey:inIdentifier];
-			[mConnections removeObjectForKey:inIdentifier];
-			[request clearDelegatesAndCancel];
-#else
             SBNSURLConnection *request = [mConnections objectForKey:inIdentifier];
             [mConnections removeObjectForKey:inIdentifier];
             [request cancellAndClearDelegate];
-#endif
         }
 	}
 }
