@@ -134,10 +134,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-	[[WebEngine defaultWebEngine] cancelAllconnections];
-	NSString *the_emailId  = @"j@j.com";
-	NSString *the_password = @"Qwerty";
-	
     if([[Reachability reachabilityForInternetConnection] currentReachabilityStatus]==kNotReachable)
 	{
 		UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Internet Connection!" message:@"Please check if your device is connected to internet." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
@@ -145,6 +141,10 @@
         [alert release];
 		return;
 	}
+    
+    [[WebEngine defaultWebEngine] cancelAllconnections];
+	NSString *the_emailId  = @"j@j.com";
+	NSString *the_password = @"Qwerty";
 
 	[[WebEngine defaultWebEngine] sendLoginRequestwithInfo:[NSDictionary dictionaryWithObjectsAndKeys:the_password,kPwd,the_emailId,kLoginID,nil] withObserver:self];
 
