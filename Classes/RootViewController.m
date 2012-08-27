@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "StringConstants.h"
 #import "WebEngine.h"
+#import "Reachability.h"
 
 @implementation RootViewController
 
@@ -137,11 +138,15 @@
 	NSString *the_emailId  = @"j@j.com";
 	NSString *the_password = @"Qwerty";
 	
+    if([[Reachability reachabilityForInternetConnection] currentReachabilityStatus]==kNotReachable)
+	{
+		UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Internet Connection!" message:@"Please check if your device is connected to internet." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [alert show];
+        [alert release];
+		return;
+	}
+
 	[[WebEngine defaultWebEngine] sendLoginRequestwithInfo:[NSDictionary dictionaryWithObjectsAndKeys:the_password,kPwd,the_emailId,kLoginID,nil] withObserver:self];
-	
-	//[[WebEngine defaultWebEngine] senduploadPhotoRequestwithInfo:nil withObserver:self];
-	//[[WebEngine defaultWebEngine]  sendgetSettingsInfoRequest:nil withObserver:self];
-	//[[WebEngine defaultWebEngine] sendgetAllFavoritePlaceswithInfo:nil withObserver:self];
 
 }
 
